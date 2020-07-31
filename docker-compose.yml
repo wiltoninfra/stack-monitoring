@@ -1,0 +1,140 @@
+version: '3.7'
+services:
+  api.promo-swoole.dev:
+    container_name: api.promo-swoole.dev
+    #image: 289208114389.dkr.ecr.us-east-1.amazonaws.com/picpay-dev/promo:qa
+    build:
+      context: ./
+      dockerfile: Dockerfile-swoole
+      args:
+        - APP_STAGE=dev
+        - COMPOSER_AUTH=${COMPOSER_AUTH}
+    volumes:
+      - ./api:/app
+    #restart: unless-stopped
+    networks:
+      - bubble
+    ports:
+      - "9041:1215"
+    environment:
+      - PICPAY_PROMO_LOAD_COMPLETED=true
+      - PICPAY_LOAD_COMPLETED=true
+      - APP_STAGE=dev
+      - APP_ENV=dev
+      - NEWRELIC_APP_NAME=app:dev
+      - APP_NAME=promo
+      - PICPAY_NEWRELIC_LICENSE_KEY=sdknfsdlnflsndfsdnfçl
+      - PICPAY_ENV=dev
+
+  api.promo-phpfpm.dev:
+    container_name: api.promo-phpfpm.dev
+    image: 289208114389.dkr.ecr.us-east-1.amazonaws.com/picpay-dev/promo:qa
+    build:
+      context: ./
+      dockerfile: Dockerfile-phpfpm
+      args:
+        - APP_STAGE=dev
+        - COMPOSER_AUTH=${COMPOSER_AUTH}
+    volumes:
+      - ./api:/app
+    #restart: unless-stopped
+    networks:
+      - bubble
+    ports:
+      - "9040:80"
+    environment:
+      - PICPAY_PROMO_LOAD_COMPLETED=true
+      - PICPAY_LOAD_COMPLETED=true
+      - APP_STAGE=dev
+      - APP_ENV=dev
+      - NEWRELIC_APP_NAME=app:dev
+      - APP_NAME=promo
+      - PICPAY_NEWRELIC_LICENSE_KEY=sdknfsdlnflsndfsdnfçl
+      - PICPAY_ENV=dev
+
+  mongo.promo.dev:
+    container_name: mongo.promo.dev
+    image: mongo:3.4
+    environment:
+      TZ: America/Sao_Paulo
+    volumes:
+      - promo_db:/data/db
+    networks:
+      - bubble
+    ports:
+      - "27040:27017"
+
+  prometheus:
+      image: linuxtips/prometheus_alpine
+      container_name: prometheus
+      restart: always
+      volumes:
+        - ./data/prometheus/conf:/etc/prometheus/
+        - ./data/prometheus/data:/var/lib/prometheus
+      links:
+        - cadvisor:cadvisor
+        - node-exporter:node-exporter
+      networks:
+        - bubble
+      ports:
+        - 9090:9090  
+
+  node-exporter:
+    image: linuxtips/node-exporter_alpine
+    hostname: node-exporter
+    volumes:
+      - /proc:/usr/proc
+      - /sys:/usr/sys
+      - /:/rootfs
+    deploy:
+      mode: global
+    networks:
+      - bubble
+    ports:
+      - 9100:9100
+
+  alertmanager:
+    image: linuxtips/alertmanager_alpine
+    volumes:
+      - ./data/alertmanager/conf/:/etc/alertmanager/
+    networks:
+      - bubble
+    ports:
+      - 9093:9093
+
+  cadvisor:
+    image: google/cadvisor
+    hostname: cadvisor
+    volumes:
+      - /:/rootfs:ro
+      - /var/run:/var/run:rw
+      - /sys:/sys:ro
+      - /var/lib/docker/:/var/lib/docker:ro
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+    networks:
+      - bubble
+    deploy:
+      mode: global
+    ports:
+      - 8080:8080
+
+  grafana:
+    image: grafana/grafana:latest
+    container_name: grafana
+    ports:
+      - "3000:3000"
+    env_file:
+      - grafana.config
+    depends_on:
+      - prometheus      
+    volumes:
+      - ./data/grafana/data:/var/lib/grafana
+    networks:
+      - bubble
+
+networks:
+  bubble:
+    external: true
+
+volumes:
+  promo_db:

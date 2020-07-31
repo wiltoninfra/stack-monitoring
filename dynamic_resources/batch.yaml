@@ -1,0 +1,61 @@
+  
+## Lista de jobs do serviço Promo (Promoções)
+##
+## Jobs Promo
+#
+---
+deposit-listener:
+  image: "289208114389.dkr.ecr.us-east-1.amazonaws.com/picpay-dev/promo"
+  command: "/docker-artisan-env promo:completed-deposits-listener"
+  workload: "memory"
+  extra_labels: 
+    essential: "false"
+  spot_suport: True
+  memory:  "512Mi"
+  cpu: "200m"
+  pods: 1
+
+p2p-transaction:
+  image: "289208114389.dkr.ecr.us-east-1.amazonaws.com/picpay-dev/promo"
+  command: "/docker-artisan-env promo:p2p-transactions-listener"
+  workload: "memory"
+  extra_labels: 
+    essential: "false"
+  spot_suport: True
+  memory:  "512Mi"
+  cpu: "200m"
+  pods: 1
+
+promo-transaction:
+  image: "289208114389.dkr.ecr.us-east-1.amazonaws.com/picpay-dev/promo"
+  command: "/docker-artisan-env promo:transactions-listener"
+  workload: "memory"
+  extra_labels: 
+    essential: "false"
+  spot_suport: True
+  memory:  "512Mi"
+  cpu: "200m"
+  pods: 1
+
+campaign-associate:
+  image: "289208114389.dkr.ecr.us-east-1.amazonaws.com/picpay-dev/promo"
+  command: "/docker-artisan-env promo:campaign-associate"
+  workload: "memory"
+  extra_labels:
+    essential: "false"
+  spot_suport: True
+  memory:  "512Mi"
+  cpu: "200m"
+  pods: 1
+
+mixpanel-menssage-sent:
+  image: "289208114389.dkr.ecr.us-east-1.amazonaws.com/picpay-dev/promo"
+  command: "/docker-artisan-env promo:mixpanel-message-sent"
+  workload: "memory"
+  extra_labels:
+    essential: "false"
+  spot_suport: True
+  memory:  "512Mi"
+  cpu: "200m"
+  pods: 1
+

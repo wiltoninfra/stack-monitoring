@@ -1,0 +1,17 @@
+/api/vendor
+/data
+/api/.idea
+/api/Homestead.json
+/api/Homestead.yaml
+/api/15
+/api/.env
+/api/storage/cache
+supervisord.pid
+
+### Code ###
+# Visual Studio Code - https://code.visualstudio.com/
+.settings/
+.vscode/
+.idea/
+tsconfig.json
+jsconfig.json

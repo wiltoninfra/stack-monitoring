@@ -1,0 +1,99 @@
+version: '3.7'
+services:
+  api.promo.dev:
+    container_name: api.promo.dev
+    image: 289208114389.dkr.ecr.us-east-1.amazonaws.com/picpay-dev/promo:qa
+    build:
+      context: ./
+      dockerfile: Dockerfile 
+      args:
+        - APP_STAGE=dev
+        - COMPOSER_AUTH=${COMPOSER_AUTH}
+    volumes:
+      - ./api:/app
+    #restart: unless-stopped
+    networks:
+      - bubble
+    ports:
+      - "9040:80"
+      - "9041:1215"
+
+    environment:
+      - PICPAY_PROMO_LOAD_COMPLETED=true
+      - PICPAY_LOAD_COMPLETED=true
+      - APP_STAGE=dev
+      - APP_ENV=dev
+      - NEWRELIC_APP_NAME=app:dev
+      - APP_NAME=promo
+      - PICPAY_NEWRELIC_LICENSE_KEY=sdknfsdlnflsndfsdnfçl
+      - PICPAY_ENV=dev
+
+  mongo.promo.dev:
+    container_name: mongo.promo.dev
+    image: mongo:3.4
+    environment:
+      TZ: America/Sao_Paulo
+    volumes:
+      - promo_db:/data/db
+    networks:
+      - bubble
+    ports:
+      - "27040:27017"
+
+  test.promo.dev:
+    container_name: test.promo.dev
+    image: zooz/predator
+    environment:
+      INTERNAL_ADDRESS: http://test.promo.dev:80/v1 
+      JOB_PLATFORM: DOCKER 
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    networks:
+      - bubble
+    ports:
+      - "8080:80"      
+
+  influxdb:
+    image: influxdb:latest
+    container_name: influxdb
+    ports:
+      - "8083:8083"
+      - "8086:8086"
+      - "8090:8090"
+    env_file:
+      - 'env.influxdb'
+    volumes:
+      # Data persistency
+      # sudo mkdir -p /srv/docker/influxdb/data
+      - ./data/influxdb/data:/var/lib/influxdb
+
+  telegraf:
+    image: telegraf:latest
+    container_name: telegraf
+    links:
+      - influxdb
+    volumes:
+      - ./telegraf.conf:/etc/telegraf/telegraf.conf:ro
+
+  grafana:
+    image: grafana/grafana:latest
+    container_name: grafana
+    ports:
+      - "3000:3000"
+    env_file:
+      - 'env.grafana'
+    user: "0"
+    links:
+      - influxdb
+    volumes:
+      # Data persistency
+      # sudo mkdir -p /srv/docker/grafana/data; chown 472:472 /srv/docker/grafana/data
+      - ./data/grafana/data:/var/lib/grafana
+
+
+networks:
+  bubble:
+    external: true
+
+volumes:
+  promo_db:

@@ -1,0 +1,81 @@
+{
+    "name": "picpay/promo",
+    "description": "Promo Service by PicPay",
+    "type": "project",
+    "require": {
+        "php": ">=7.1.3",
+        "laravel/lumen-framework": "5.6.*",
+        "vlucas/phpdotenv": "~2.2",
+        "nesbot/carbon": "^1.30",
+        "picpay/beanstalkd-queue": "dev-master",
+        "picpay/common": "dev-master",
+        "picpay/laravel-common": "dev-master#60912e3c82b9399f73f7298b53ea6ce73ec325ff",
+        "picpay/snspp": "dev-master",
+        "picpay/doctrine-lumen": "dev-master#c3557475a61e296e30eeca0c44cb119809390388",
+        "zircote/swagger-php": "2.*",
+        "guzzlehttp/guzzle": "~6.0",
+        "league/flysystem-aws-s3-v3": "^1.0",
+        "league/flysystem": "^1.0",
+        "jenssegers/mongodb": "^3.5",
+        "predis/predis": "^1.1",
+        "illuminate/redis": "5.6.*",
+        "darkaonline/swagger-lume": "5.6.*",
+        "nordsoftware/lumen-newrelic": "^2.0",
+        "ukfast/laravel-health-check": "^1.0",
+        "mixpanel/mixpanel-php": "^2.8",
+        "picpay/picpay-php-enqueue-connector": "^2.0",
+        "swooletw/laravel-swoole": "^2.6"
+    },
+    "require-dev": {
+        "fzaninotto/faker": "~1.4",
+        "phpunit/phpunit": "~7.0",
+        "mockery/mockery": "~1.0",
+        "vluzrmos/tinker": "dev-master",
+        "codacy/coverage": "^1.4",
+        "squizlabs/php_codesniffer": "^3.5"
+    },
+    "repositories": {
+        "0": {
+            "type": "vcs",
+            "url": "https://github.com/PicPay/picpay-dev-php-common-lib.git"
+        },
+        "1": {
+            "type": "vcs",
+            "url": "https://github.com/PicPay/picpay-dev-php-common-laravel-common.git"
+        },
+        "2": {
+            "type": "vcs",
+            "url": "https://github.com/PicPay/picpay-dev-beanstalkd-queue.git"
+        },
+        "3": {
+            "type": "vcs",
+            "url": "https://github.com/PicPay/picpay-dev-php-common-snspp.git"
+        },
+        "4": {
+            "type": "vcs",
+            "url": "https://github.com/PicPay/picpay-dev-php-common-doctrine-lumen.git"
+        },
+        "picpay-php-enqueue-connector": {
+            "type": "vcs",
+            "url": "https://github.com/PicPay/picpay-php-enqueue-connector.git"
+        }
+    },
+    "autoload": {
+        "psr-4": {
+            "Promo\\": "app/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Tests\\": "tests/"
+        }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "config": {
+        "optimize-autoloader": true,
+        "platform": {
+            "ext-mongo": "1.6.16"
+        }
+    }
+}

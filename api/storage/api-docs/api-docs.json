@@ -1,0 +1,3112 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "title": "Promo API",
+        "description": "Promo API by PicPay",
+        "version": "1.0"
+    },
+    "basePath": "/api/v1",
+    "schemes": [
+        "http"
+    ],
+    "paths": {
+        "/banners": {
+            "get": {
+                "tags": [
+                    "banner"
+                ],
+                "summary": "Obt\u00e9m todos os banners",
+                "description": "Obt\u00e9m banners",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "sort",
+                        "in": "query",
+                        "description": "Ordena por qualquer atributo da raiz. Ex.: sort=-id, ordena por id DESC",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "active",
+                        "in": "query",
+                        "description": "Filtra por active",
+                        "required": false,
+                        "type": "boolean"
+                    },
+                    {
+                        "name": "page",
+                        "in": "query",
+                        "description": "N\u00famero da p\u00e1gina",
+                        "required": false,
+                        "type": "integer"
+                    },
+                    {
+                        "name": "page_size",
+                        "in": "query",
+                        "description": "Tamanho da p\u00e1gina",
+                        "required": false,
+                        "type": "integer"
+                    },
+                    {
+                        "name": "count",
+                        "in": "query",
+                        "description": "Se retorna o total de itens ou n\u00e3o",
+                        "required": false,
+                        "type": "boolean"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Ok"
+                    },
+                    "500": {
+                        "description": "Internal server error"
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "banner"
+                ],
+                "summary": "Cria banner",
+                "description": "Cria banner",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "payload",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "type": "object",
+                            "$ref": "#/definitions/Banner"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Created"
+                    },
+                    "409": {
+                        "description": "Conflict"
+                    },
+                    "500": {
+                        "description": "Internal server error"
+                    }
+                }
+            }
+        },
+        "/banners/{banner_id}": {
+            "get": {
+                "tags": [
+                    "banner"
+                ],
+                "summary": "Obt\u00e9m um banner",
+                "description": "Obt\u00e9m uma banner",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "banner_id",
+                        "in": "path",
+                        "description": "Id do banner",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Ok"
+                    },
+                    "404": {
+                        "description": "Banner n\u00e3o encontrado"
+                    },
+                    "500": {
+                        "description": "Internal server error"
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "banner"
+                ],
+                "summary": "Atualiza banner",
+                "description": "Atualiza banner",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "banner_id",
+                        "in": "path",
+                        "description": "Id do banner",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "payload",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "type": "object",
+                            "$ref": "#/definitions/BannerUpdate"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Created"
+                    },
+                    "409": {
+                        "description": "Conflict"
+                    },
+                    "500": {
+                        "description": "Internal server error"
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "banner"
+                ],
+                "summary": "Exclui banner",
+                "description": "Exclui banner (soft delete)",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "banner_id",
+                        "in": "path",
+                        "description": "Id do banner",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "Deleted"
+                    },
+                    "404": {
+                        "description": "Campaign not found"
+                    },
+                    "500": {
+                        "description": "Internal server error"
+                    }
+                }
+            }
+        },
+        "/banners/{banner_id}/status": {
+            "patch": {
+                "tags": [
+                    "banner"
+                ],
+                "summary": "Atualiza estado do banner",
+                "description": "Atualiza estado do banner",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "banner_id",
+                        "in": "path",
+                        "description": "Id do banner",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "payload",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "type": "object",
+                            "$ref": "#/definitions/UpdateCampaignStatus"
+                        }
+                    }
+                ],
+                "responses": {
+                    "202": {
+                        "description": "Accepted"
+                    },
+                    "409": {
+                        "description": "Conflict"
+                    },
+                    "422": {
+                        "description": "Validation error"
+                    },
+                    "500": {
+                        "description": "Internal server error"
+                    }
+                }
+            }
+        },
+        "/banners/publish": {
+            "patch": {
+                "tags": [
+                    "banner"
+                ],
+                "description": "Publica os banners",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "payload",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "type": "object",
+                            "$ref": "#/definitions/PublishBanners"
+                        }
+                    }
+                ],
+                "responses": {
+                    "202": {
+                        "description": "Accepted"
+                    },
+                    "409": {
+                        "description": "Conflict"
+                    },
+                    "422": {
+                        "description": "Validation error"
+                    },
+                    "500": {
+                        "description": "Internal server error"
+                    }
+                }
+            }
+        },
+        "/consumers/{consumer_id}/blacklist": {
+            "get": {
+                "tags": [
+                    "blacklisted"
+                ],
+                "summary": "Obt\u00e9m BlackListed By Consumer Id",
+                "description": "Obt\u00e9m detalhes do bloqueio de um usuario",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "consumer_id",
+                        "in": "path",
+                        "required": true,
+                        "type": "integer"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Ok"
+                    },
+                    "500": {
+                        "description": "Internal server error"
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "blacklisted"
+                ],
+                "summary": "Atualiza BlacklistedConsumer",
+                "description": "Atualiza detalhes do bloqueio de usuario",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "payload",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "type": "object",
+                            "$ref": "#/definitions/BlackListedConsumerUpdateRequest"
+                        }
+                    },
+                    {
+                        "name": "consumer_id",
+                        "in": "path",
+                        "required": true,
+                        "type": "integer"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Accepted"
+                    },
+                    "422": {
+                        "description": "Validation concern"
+                    },
+                    "500": {
+                        "description": "Internal server error"
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "blacklisted"
+                ],
+                "summary": "Cria BlackListed",
+                "description": "Cria BlacklistedConsumer",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "payload",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "type": "object",
+                            "$ref": "#/definitions/BlackListedConsumerCreateRequest"
+                        }
+                    },
+                    {
+                        "name": "consumer_id",
+                        "in": "path",
+                        "required": true,
+                        "type": "integer"
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Created"
+                    },
+                    "422": {
+                        "description": "Validation concern"
+                    },
+                    "500": {
+                        "description": "Internal server error"
+                    }
+                }
+            }
+        },
+        "/campaigns": {
+            "get": {
+                "tags": [
+                    "campaign"
+                ],
+                "summary": "Obt\u00e9m todas as campanhas",
+                "description": "Obt\u00e9m campanhas",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "sort",
+                        "in": "query",
+                        "description": "Ordena por qualquer atributo da raiz. Ex.: sort=-id, ordena por id DESC",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "id",
+                        "in": "query",
+                        "description": "Filtra por id",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "ids",
+                        "in": "query",
+                        "description": "Lista de ids separado por v\u00edrgula",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "type",
+                        "in": "query",
+                        "description": "Filtra por type",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "active",
+                        "in": "query",
+                        "description": "Filtra por active",
+                        "required": false,
+                        "type": "boolean"
+                    },
+                    {
+                        "name": "global",
+                        "in": "query",
+                        "description": "Filtra por global",
+                        "required": false,
+                        "type": "boolean"
+                    },
+                    {
+                        "name": "start_date",
+                        "in": "query",
+                        "description": "Filtra por datas de in\u00edcio a partir da informada, em ISO 8601",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "end_date",
+                        "in": "query",
+                        "description": "Filtra por datas de fim at\u00e9 a informada, em ISO 8601",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "expire_date",
+                        "in": "query",
+                        "description": "Filtra campanhas que expiram at\u00e9 o fim do dia da data informada, em ISO 8601",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "consumers",
+                        "in": "query",
+                        "description": "Filtra por IDs de consumers, separados por v\u00edrgula",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "sellers",
+                        "in": "query",
+                        "description": "Filtra por IDs de sellers, separados por v\u00edrgula",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "tags",
+                        "in": "query",
+                        "description": "Filtra por IDs de tags, separados por v\u00edrgula",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "sellers_types",
+                        "in": "query",
+                        "description": "Filtra por tipos de sellers, separados por v\u00edrgula",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "transaction_type",
+                        "in": "query",
+                        "description": "Filtra por tipos de transa\u00e7\u00e3o da campanha",
+                        "required": false,
+                        "type": "string",
+                        "enum": [
+                            "p2p",
+                            "pav"
+                        ]
+                    },
+                    {
+                        "name": "page",
+                        "in": "query",
+                        "description": "N\u00famero da p\u00e1gina",
+                        "required": false,
+                        "type": "integer"
+                    },
+                    {
+                        "name": "page_size",
+                        "in": "query",
+                        "description": "Tamanho da p\u00e1gina",
+                        "required": false,
+                        "type": "integer"
+                    },
+                    {
+                        "name": "count",
+                        "in": "query",
+                        "description": "Se retorna o total de itens ou n\u00e3o",
+                        "required": false,
+                        "type": "boolean"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Ok"
+                    },
+                    "500": {
+                        "description": "Internal server error"
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "campaign"
+                ],
+                "summary": "Cria campanha",
+                "description": "Cria campanha",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "payload",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "type": "object",
+                            "$ref": "#/definitions/Campaign"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Created"
+                    },
+                    "422": {
+                        "description": "Validation stuff"
+                    },
+                    "409": {
+                        "description": "Conflict"
+                    },
+                    "500": {
+                        "description": "Internal server error"
+                    }
+                }
+            }
+        },
+        "/campaigns/{campaign_id}": {
+            "get": {
+                "tags": [
+                    "campaign"
+                ],
+                "summary": "Obt\u00e9m uma campanha",
+                "description": "Obt\u00e9m uma campanha espec\u00edfica",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "campaign_id",
+                        "in": "path",
+                        "description": "Id da campanha",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Ok"
+                    },
+                    "404": {
+                        "description": "Campanha n\u00e3o encontrada"
+                    },
+                    "500": {
+                        "description": "Internal server error"
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "campaign"
+                ],
+                "summary": "Atualiza campanha",
+                "description": "Atualiza campanha",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "campaign_id",
+                        "in": "path",
+                        "description": "Id da campanha",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "payload",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "type": "object",
+                            "$ref": "#/definitions/Campaign"
+                        }
+                    }
+                ],
+                "responses": {
+                    "202": {
+                        "description": "Accepted"
+                    },
+                    "422": {
+                        "description": "Validation error"
+                    },
+                    "500": {
+                        "description": "Internal server error"
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "campaign"
+                ],
+                "summary": "Exclui campanha",
+                "description": "Exclui campanha (soft delete)",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "campaign_id",
+                        "in": "path",
+                        "description": "Id da campanha",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "Deleted"
+                    },
+                    "404": {
+                        "description": "Campaign not found"
+                    },
+                    "500": {
+                        "description": "Internal server error"
+                    }
+                }
+            }
+        },
+        "/campaigns/{campaign_id}/status": {
+            "patch": {
+                "tags": [
+                    "campaign"
+                ],
+                "summary": "Atualiza estado de campanha",
+                "description": "Atualiza estado de campanha",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "campaign_id",
+                        "in": "path",
+                        "description": "Id da campanha",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "payload",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "type": "object",
+                            "$ref": "#/definitions/UpdateCampaignStatus"
+                        }
+                    }
+                ],
+                "responses": {
+                    "202": {
+                        "description": "Accepted"
+                    },
+                    "409": {
+                        "description": "Conflict"
+                    },
+                    "422": {
+                        "description": "Validation error"
+                    },
+                    "500": {
+                        "description": "Internal server error"
+                    }
+                }
+            }
+        },
+        "/campaigns/{campaign_id}/association": {
+            "delete": {
+                "tags": [
+                    "campaign"
+                ],
+                "summary": "Desassocia consumers a campanha",
+                "description": "Desassocia consumers a campanha",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "campaign_id",
+                        "in": "path",
+                        "description": "Id da campanha",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "payload",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "type": "object",
+                            "$ref": "#/definitions/AssociateCampaign"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Ok"
+                    },
+                    "422": {
+                        "description": "Validation error"
+                    },
+                    "500": {
+                        "description": "Internal server error"
+                    }
+                }
+            },
+            "patch": {
+                "tags": [
+                    "campaign"
+                ],
+                "summary": "Associa consumers a campanha",
+                "description": "Associa consumers a campanha",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "campaign_id",
+                        "in": "path",
+                        "description": "Id da campanha",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "payload",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "type": "object",
+                            "$ref": "#/definitions/AssociateCampaign"
+                        }
+                    }
+                ],
+                "responses": {
+                    "202": {
+                        "description": "Accepted"
+                    },
+                    "422": {
+                        "description": "Validation error"
+                    },
+                    "500": {
+                        "description": "Internal server error"
+                    }
+                }
+            }
+        },
+        "/campaigns/{campaign_id}/add-consumer/{consumer_id}": {
+            "patch": {
+                "tags": [
+                    "campaign"
+                ],
+                "summary": "Atualiza sellers da campanha",
+                "description": "Atualiza consumers da campanha",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "campaign_id",
+                        "in": "path",
+                        "description": "Id da campanha",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "consumer_id",
+                        "in": "path",
+                        "description": "Id do consumer",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "202": {
+                        "description": "Accepted"
+                    },
+                    "422": {
+                        "description": "Validation error"
+                    },
+                    "500": {
+                        "description": "Internal server error"
+                    }
+                }
+            }
+        },
+        "/campaigns/{campaign_id}/sellers": {
+            "patch": {
+                "tags": [
+                    "campaign"
+                ],
+                "summary": "Atualiza sellers da campanha",
+                "description": "Atualiza sellers da campanha",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "campaign_id",
+                        "in": "path",
+                        "description": "Id da campanha",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "payload",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "type": "object",
+                            "$ref": "#/definitions/UpdateCampaignSellers"
+                        }
+                    }
+                ],
+                "responses": {
+                    "202": {
+                        "description": "Accepted"
+                    },
+                    "422": {
+                        "description": "Validation error"
+                    },
+                    "500": {
+                        "description": "Internal server error"
+                    }
+                }
+            }
+        },
+        "/campaigns/types": {
+            "get": {
+                "tags": [
+                    "campaign"
+                ],
+                "summary": "Obt\u00e9m tipos de campanha",
+                "description": "Obt\u00e9m tipos poss\u00edveis de campanhas",
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Ok"
+                    }
+                }
+            }
+        },
+        "/campaigns/{campaign_id}/stats": {
+            "get": {
+                "tags": [
+                    "campaign"
+                ],
+                "summary": "Obt\u00e9m as estat\u00edsticas de uma campanha",
+                "description": "Obt\u00e9m as estat\u00edsticas de uma campanha espec\u00edfica",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "campaign_id",
+                        "in": "path",
+                        "description": "ID da campanha",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Ok"
+                    },
+                    "404": {
+                        "description": "Campanha n\u00e3o encontrada"
+                    },
+                    "500": {
+                        "description": "Internal server error"
+                    }
+                }
+            }
+        },
+        "/campaigns/{campaign_id}/tags": {
+            "patch": {
+                "tags": [
+                    "campaign"
+                ],
+                "summary": "Atualiza tags de campanha",
+                "description": "Atualiza tags de campanha",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "campaign_id",
+                        "in": "path",
+                        "description": "Id da campanha",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "payload",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "type": "object",
+                            "$ref": "#/definitions/TagAssociation"
+                        }
+                    }
+                ],
+                "responses": {
+                    "202": {
+                        "description": "Accepted"
+                    },
+                    "422": {
+                        "description": "Validation error"
+                    },
+                    "500": {
+                        "description": "Internal server error"
+                    }
+                }
+            }
+        },
+        "/campaigns/{campaign_id}/permissions": {
+            "patch": {
+                "tags": [
+                    "campaign"
+                ],
+                "summary": "Aplicar as permissoes da campanha",
+                "description": "Aplicar as permissoes da campanha",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "campaign_id",
+                        "in": "path",
+                        "description": "Id da campanha",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "payload",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "type": "object",
+                            "$ref": "#/definitions/ApplyPermissions"
+                        }
+                    }
+                ],
+                "responses": {
+                    "202": {
+                        "description": "Accepted"
+                    },
+                    "422": {
+                        "description": "Validation error"
+                    },
+                    "500": {
+                        "description": "Internal server error"
+                    }
+                }
+            }
+        },
+        "/consumers/{consumer_id}/cashback": {
+            "patch": {
+                "tags": [
+                    "cashback"
+                ],
+                "summary": "Obt\u00e9m cashback",
+                "description": "A partir de detalhes de transa\u00e7\u00e3o e consumer, retorna a melhor campanha e cancela as similares",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "consumer_id",
+                        "in": "path",
+                        "required": true,
+                        "type": "integer"
+                    },
+                    {
+                        "name": "payload",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "type": "object",
+                            "$ref": "#/definitions/TransactionCorePayload"
+                        }
+                    }
+                ],
+                "responses": {
+                    "202": {
+                        "description": "Accepted"
+                    },
+                    "404": {
+                        "description": "Consumer not found"
+                    },
+                    "500": {
+                        "description": "Internal server error"
+                    }
+                }
+            }
+        },
+        "/consumers/{consumer_id}/cashfront": {
+            "patch": {
+                "tags": [
+                    "cashfront"
+                ],
+                "summary": "Executa cashfront",
+                "description": "A partir de detalhes do dep\u00f3sito e consumer, retorna a melhor campanha e cancela as similares",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "consumer_id",
+                        "in": "path",
+                        "required": true,
+                        "type": "integer"
+                    },
+                    {
+                        "name": "payload",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "type": "object",
+                            "$ref": "#/definitions/DepositCorePayload"
+                        }
+                    }
+                ],
+                "responses": {
+                    "202": {
+                        "description": "Accepted"
+                    },
+                    "500": {
+                        "description": "Internal server error"
+                    }
+                }
+            }
+        },
+        "/consumers/{consumer_id}/transactions/{transaction_type}/{transaction_id}/undo": {
+            "patch": {
+                "tags": [
+                    "cashback"
+                ],
+                "summary": "Reverte cashback e efeitos colaterais gerados por transa\u00e7\u00e3o",
+                "description": "Com informa\u00e7\u00e3o de transa\u00e7\u00e3o que gerou cashback, desfaz",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "consumer_id",
+                        "in": "path",
+                        "required": true,
+                        "type": "integer"
+                    },
+                    {
+                        "name": "transaction_type",
+                        "in": "path",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "transaction_id",
+                        "in": "path",
+                        "required": true,
+                        "type": "integer"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Ok"
+                    },
+                    "404": {
+                        "description": "Transaction not found"
+                    },
+                    "500": {
+                        "description": "Internal server error"
+                    }
+                }
+            }
+        },
+        "/consumers/{consumer_id}/campaigns/associations": {
+            "get": {
+                "tags": [
+                    "consumer"
+                ],
+                "summary": "Obt\u00e9m as as associa\u00e7\u00f5es de um usu\u00e1rio a campanhas",
+                "description": "Obt\u00e9m as as associa\u00e7\u00f5es de um usu\u00e1rio a campanhas",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "consumer_id",
+                        "in": "path",
+                        "required": true,
+                        "type": "integer"
+                    },
+                    {
+                        "name": "start_date",
+                        "in": "query",
+                        "description": "Filtra por datas de associa\u00e7\u00e3o a partir da informada, em ISO 8601",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "end_date",
+                        "in": "query",
+                        "description": "Filtra por datas de associa\u00e7\u00e3o de fim at\u00e9 a informada, em ISO 8601",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "page",
+                        "in": "query",
+                        "description": "N\u00famero da p\u00e1gina",
+                        "required": false,
+                        "type": "integer"
+                    },
+                    {
+                        "name": "page_size",
+                        "in": "query",
+                        "description": "Tamanho da p\u00e1gina",
+                        "required": false,
+                        "type": "integer"
+                    },
+                    {
+                        "name": "count",
+                        "in": "query",
+                        "description": "Se retorna o total de itens ou n\u00e3o",
+                        "required": false,
+                        "type": "integer"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Ok"
+                    },
+                    "500": {
+                        "description": "Internal server error"
+                    }
+                }
+            }
+        },
+        "/consumers/{consumer_id}/coupon": {
+            "patch": {
+                "tags": [
+                    "coupon"
+                ],
+                "summary": "Aplica cupom a usu\u00e1rio",
+                "description": "Tenta aplicar cupom, que faz associa\u00e7\u00e3o a campanha",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "consumer_id",
+                        "in": "path",
+                        "required": true,
+                        "type": "integer"
+                    },
+                    {
+                        "name": "payload",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "type": "object",
+                            "$ref": "#/definitions/CouponApplicationPayload"
+                        }
+                    }
+                ],
+                "responses": {
+                    "202": {
+                        "description": "Accepted"
+                    },
+                    "404": {
+                        "description": "Consumer not found"
+                    },
+                    "500": {
+                        "description": "Internal server error"
+                    }
+                }
+            }
+        },
+        "/consumers/{consumer_id}/transactions/{transaction_type}/{transaction_id}": {
+            "get": {
+                "tags": [
+                    "cashback"
+                ],
+                "summary": "Obt\u00e9m transa\u00e7\u00e3o que gerou cashback",
+                "description": "Com consumer e transaction ids, retorna a transa\u00e7\u00e3o",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "consumer_id",
+                        "in": "path",
+                        "required": true,
+                        "type": "integer"
+                    },
+                    {
+                        "name": "transaction_type",
+                        "in": "path",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "transaction_id",
+                        "in": "path",
+                        "required": true,
+                        "type": "integer"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Ok"
+                    },
+                    "404": {
+                        "description": "Transaction not found"
+                    },
+                    "500": {
+                        "description": "Internal server error"
+                    }
+                }
+            }
+        },
+        "/consumers/{consumer_id}/transactions": {
+            "get": {
+                "tags": [
+                    "cashback"
+                ],
+                "summary": "Obt\u00e9m as as transa\u00e7\u00f5es que geraram cashback a um usu\u00e1rio",
+                "description": "Obt\u00e9m as as transa\u00e7\u00f5es que geraram cashback a um usu\u00e1rio",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "consumer_id",
+                        "in": "path",
+                        "required": true,
+                        "type": "integer"
+                    },
+                    {
+                        "name": "campaign_id",
+                        "in": "query",
+                        "description": "Filtra por id de campanha",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "transaction_id",
+                        "in": "query",
+                        "description": "Filtra por id de transa\u00e7\u00e3o",
+                        "required": false,
+                        "type": "integer"
+                    },
+                    {
+                        "name": "transaction_type",
+                        "in": "query",
+                        "description": "Tipo p2p ou pav",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "page",
+                        "in": "query",
+                        "description": "N\u00famero da p\u00e1gina",
+                        "required": false,
+                        "type": "integer"
+                    },
+                    {
+                        "name": "page_size",
+                        "in": "query",
+                        "description": "Tamanho da p\u00e1gina",
+                        "required": false,
+                        "type": "integer"
+                    },
+                    {
+                        "name": "count",
+                        "in": "query",
+                        "description": "Se retorna o total de itens ou n\u00e3o",
+                        "required": false,
+                        "type": "boolean"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Ok"
+                    },
+                    "500": {
+                        "description": "Internal server error"
+                    }
+                }
+            }
+        },
+        "/consumers/{consumer_id}/banners": {
+            "get": {
+                "tags": [
+                    "banner"
+                ],
+                "summary": "Obt\u00e9m os banners de um consumer, direcionados e globais",
+                "description": "Obt\u00e9m os banners direcionados a um consumer",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "consumer_id",
+                        "in": "path",
+                        "required": true,
+                        "type": "integer"
+                    },
+                    {
+                        "name": "area_code",
+                        "in": "query",
+                        "description": "DDD do usu\u00e1rio",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Ok"
+                    },
+                    "500": {
+                        "description": "Internal server error"
+                    }
+                }
+            }
+        },
+        "/consumers/batch/payments": {
+            "post": {
+                "tags": [
+                    "consumer"
+                ],
+                "summary": "Processa pagamentos manuais dos consumers, de acordo com uma campanha",
+                "description": "Processa pagamentos manuais dos consumers, de acordo com uma campanha",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "justification",
+                        "in": "formData",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/ConsumerBatchPaymentJustification"
+                        },
+                        "type": "string",
+                        "default": "Cashbacks n\u00e3o processados"
+                    },
+                    {
+                        "name": "file",
+                        "in": "formData",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/ConsumerBatchPaymentFile"
+                        },
+                        "type": "file"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Ok"
+                    },
+                    "422": {
+                        "description": "Unprocessable Entity"
+                    },
+                    "500": {
+                        "description": "Internal server error"
+                    }
+                }
+            }
+        },
+        "/coupons": {
+            "get": {
+                "tags": [
+                    "coupon"
+                ],
+                "summary": "Obt\u00e9m todos os cupons",
+                "description": "Obt\u00e9m cupons",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "sort",
+                        "in": "query",
+                        "description": "Ordena por qualquer atributo da raiz. Ex.: sort=-id, ordena por id DESC",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "ids",
+                        "in": "query",
+                        "description": "Lista de ids separado por v\u00edrgula",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "redirection_type",
+                        "in": "query",
+                        "description": "Filtra por tipo de redicionamento",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "code",
+                        "in": "query",
+                        "description": "Pesquisa por c\u00f3digo",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "active",
+                        "in": "query",
+                        "description": "Filtra por active",
+                        "required": false,
+                        "type": "boolean"
+                    },
+                    {
+                        "name": "global",
+                        "in": "query",
+                        "description": "Filtra por global",
+                        "required": false,
+                        "type": "boolean"
+                    },
+                    {
+                        "name": "campaign_id",
+                        "in": "query",
+                        "description": "Filtra por id de campanha",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "page",
+                        "in": "query",
+                        "description": "N\u00famero da p\u00e1gina",
+                        "required": false,
+                        "type": "integer"
+                    },
+                    {
+                        "name": "page_size",
+                        "in": "query",
+                        "description": "Tamanho da p\u00e1gina",
+                        "required": false,
+                        "type": "integer"
+                    },
+                    {
+                        "name": "count",
+                        "in": "query",
+                        "description": "Se retorna o total de itens ou n\u00e3o",
+                        "required": false,
+                        "type": "boolean"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Ok"
+                    },
+                    "500": {
+                        "description": "Internal server error"
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "coupon"
+                ],
+                "summary": "Cria cupom",
+                "description": "Cria cupom",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "payload",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "type": "object",
+                            "$ref": "#/definitions/Coupon"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Created"
+                    },
+                    "422": {
+                        "description": "Validation error"
+                    },
+                    "500": {
+                        "description": "Internal server error"
+                    }
+                }
+            }
+        },
+        "/coupons/{coupon_id}/association": {
+            "patch": {
+                "tags": [
+                    "coupon"
+                ],
+                "summary": "Associa consumers a um cupom",
+                "description": "Associa consumers um cupom",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "coupon_id",
+                        "in": "path",
+                        "description": "Id do cupom",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "payload",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "type": "object",
+                            "$ref": "#/definitions/AssociateCampaign"
+                        }
+                    }
+                ],
+                "responses": {
+                    "202": {
+                        "description": "Accepted"
+                    },
+                    "422": {
+                        "description": "Validation error"
+                    },
+                    "500": {
+                        "description": "Internal server error"
+                    }
+                }
+            }
+        },
+        "/coupons/{coupon_id}/status": {
+            "patch": {
+                "tags": [
+                    "coupon"
+                ],
+                "summary": "Atualiza estado do cupom",
+                "description": "Atualiza estado do cupom",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "coupon_id",
+                        "in": "path",
+                        "description": "Id do coupon",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "payload",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "type": "object",
+                            "$ref": "#/definitions/UpdateCampaignStatus"
+                        }
+                    }
+                ],
+                "responses": {
+                    "202": {
+                        "description": "Accepted"
+                    },
+                    "409": {
+                        "description": "Conflict"
+                    },
+                    "422": {
+                        "description": "Validation error"
+                    },
+                    "500": {
+                        "description": "Internal server error"
+                    }
+                }
+            }
+        },
+        "/coupons/{coupon_id}": {
+            "put": {
+                "tags": [
+                    "coupon"
+                ],
+                "summary": "Atualiza um cupom",
+                "description": "Atualiza um cupom",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "coupon_id",
+                        "in": "path",
+                        "description": "ID do cupom",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "payload",
+                        "in": "body",
+                        "description": "Os campos 'code' e 'campaign_id' n\u00e3o podem ser editados",
+                        "required": true,
+                        "schema": {
+                            "type": "object",
+                            "$ref": "#/definitions/Coupon"
+                        }
+                    }
+                ],
+                "responses": {
+                    "202": {
+                        "description": "Accepted"
+                    },
+                    "422": {
+                        "description": "Validation error"
+                    },
+                    "500": {
+                        "description": "Internal server error"
+                    }
+                }
+            }
+        },
+        "/tags": {
+            "get": {
+                "tags": [
+                    "tag"
+                ],
+                "summary": "Obt\u00e9m todos as tags",
+                "description": "Obt\u00e9m tags",
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Ok"
+                    },
+                    "500": {
+                        "description": "Internal server error"
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "tag"
+                ],
+                "summary": "Cria tag",
+                "description": "Cria tag",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "payload",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "type": "object",
+                            "$ref": "#/definitions/Tag"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Created"
+                    },
+                    "422": {
+                        "description": "Validation concern"
+                    },
+                    "500": {
+                        "description": "Internal server error"
+                    }
+                }
+            }
+        },
+        "/tags/{tag_id}": {
+            "put": {
+                "tags": [
+                    "tag"
+                ],
+                "summary": "Atualiza tag",
+                "description": "Atualiza tag",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "tag_id",
+                        "in": "path",
+                        "description": "Id da tag",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "payload",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "type": "object",
+                            "$ref": "#/definitions/Tag"
+                        }
+                    }
+                ],
+                "responses": {
+                    "202": {
+                        "description": "Accepted"
+                    },
+                    "422": {
+                        "description": "Validation concern"
+                    },
+                    "500": {
+                        "description": "Internal server error"
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "tag"
+                ],
+                "summary": "Exclui tag",
+                "description": "Exclui tag (soft delete)",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "tag_id",
+                        "in": "path",
+                        "description": "Id da tag",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "Deleted"
+                    },
+                    "404": {
+                        "description": "Tag not found"
+                    },
+                    "500": {
+                        "description": "Internal server error"
+                    }
+                }
+            }
+        },
+        "/webhooks/{webhook_id}": {
+            "get": {
+                "tags": [
+                    "webhook"
+                ],
+                "summary": "Obt\u00e9m um webhook",
+                "description": "Obt\u00e9m uma webhook",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "webhook_id",
+                        "in": "path",
+                        "description": "Id do webhook",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Ok"
+                    },
+                    "404": {
+                        "description": "Banner n\u00e3o encontrado"
+                    },
+                    "500": {
+                        "description": "Internal server error"
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "webhook"
+                ],
+                "summary": "Atualiza webhook",
+                "description": "Atualiza webhook",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "webhook_id",
+                        "in": "path",
+                        "description": "Id do webhook",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "payload",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "type": "object",
+                            "$ref": "#/definitions/Webhook"
+                        }
+                    }
+                ],
+                "responses": {
+                    "202": {
+                        "description": "Accepted"
+                    },
+                    "422": {
+                        "description": "Validation concern"
+                    },
+                    "500": {
+                        "description": "Internal server error"
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "webhook"
+                ],
+                "summary": "Exclui webhook",
+                "description": "Exclui webhook (soft delete)",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "webhook_id",
+                        "in": "path",
+                        "description": "Id do webhook",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "Deleted"
+                    },
+                    "404": {
+                        "description": "Webhook not found"
+                    },
+                    "500": {
+                        "description": "Internal server error"
+                    }
+                }
+            }
+        },
+        "/webhooks": {
+            "get": {
+                "tags": [
+                    "webhook"
+                ],
+                "summary": "Obt\u00e9m todos os webhooks",
+                "description": "Obt\u00e9m webhooks",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "campaign_id",
+                        "in": "query",
+                        "description": "Id da campanha",
+                        "type": "string"
+                    },
+                    {
+                        "name": "coupon_id",
+                        "in": "query",
+                        "description": "Id do cupom",
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Ok"
+                    },
+                    "500": {
+                        "description": "Internal server error"
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "webhook"
+                ],
+                "summary": "Cria webhook",
+                "description": "Cria webhook",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "payload",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "type": "object",
+                            "$ref": "#/definitions/Webhook"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Created"
+                    },
+                    "422": {
+                        "description": "Validation concern"
+                    },
+                    "500": {
+                        "description": "Internal server error"
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "Error": {
+            "description": "",
+            "properties": {
+                "error": {
+                    "type": "string"
+                },
+                "code": {
+                    "type": "integer"
+                }
+            },
+            "type": "object"
+        },
+        "ValidationError": {
+            "description": "Returns an object, where each \\*attribute\\* is an array of errors of this attribute",
+            "properties": {
+                "attribute": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                }
+            },
+            "type": "object"
+        },
+        "ApplyPermissions": {
+            "properties": {
+                "update": {
+                    "type": "boolean",
+                    "items": {
+                        "type": "boolean",
+                        "example": "false"
+                    }
+                },
+                "delete": {
+                    "type": "boolean",
+                    "items": {
+                        "type": "boolean",
+                        "example": "false"
+                    }
+                }
+            },
+            "type": "object"
+        },
+        "AssociateCampaign": {
+            "properties": {
+                "consumers": {
+                    "description": "AssociateCampaignRequest class",
+                    "type": "array",
+                    "items": {
+                        "type": "integer",
+                        "example": 3
+                    }
+                }
+            },
+            "type": "object"
+        },
+        "Banner": {
+            "properties": {
+                "image": {
+                    "type": "string",
+                    "example": "data:image/png;base64,iVBORw0KGgoAAAAN..."
+                },
+                "name": {
+                    "type": "string",
+                    "example": "Store 20% de amor"
+                },
+                "global": {
+                    "type": "boolean",
+                    "example": true
+                },
+                "start_date": {
+                    "type": "string",
+                    "example": "2018-09-28T19:05:47.904Z"
+                },
+                "end_date": {
+                    "type": "string",
+                    "example": "2027-09-30T19:05:47.904Z"
+                },
+                "campaign_id": {
+                    "type": "string",
+                    "example": "5c18f2966f569300803f6573"
+                },
+                "target": {
+                    "$ref": "#/definitions/TargetInfo"
+                },
+                "ios_min_version": {
+                    "type": "string",
+                    "example": "10.3"
+                },
+                "android_min_version": {
+                    "type": "string",
+                    "example": "10.3"
+                },
+                "conditions": {
+                    "$ref": "#/definitions/BannerConditions"
+                },
+                "info": {
+                    "$ref": "#/definitions/BannerInfo"
+                }
+            },
+            "type": "object"
+        },
+        "BannerInfo": {
+            "properties": {
+                "title": {
+                    "type": "string",
+                    "example": "T\u00edtulo legal"
+                },
+                "description": {
+                    "type": "string",
+                    "example": "Informa\u00e7\u00e3o mais legal ainda"
+                }
+            },
+            "type": "object"
+        },
+        "BannerConditions": {
+            "properties": {
+                "area_codes": {
+                    "type": "array",
+                    "items": {
+                        "type": "integer",
+                        "example": 27
+                    }
+                },
+                "excluded_campaigns": {
+                    "type": "array",
+                    "items": {
+                        "type": "string",
+                        "example": "5e53d1d011ec5d00470bd852"
+                    }
+                }
+            },
+            "type": "object"
+        },
+        "TargetInfo": {
+            "properties": {
+                "name": {
+                    "type": "string",
+                    "example": "financial_service"
+                },
+                "param": {
+                    "type": "string",
+                    "example": "boleto"
+                }
+            },
+            "type": "object"
+        },
+        "BannerUpdate": {
+            "properties": {
+                "name": {
+                    "type": "string",
+                    "example": "Store 20% de amor"
+                },
+                "start_date": {
+                    "type": "string",
+                    "example": "2018-09-28T19:05:47.904Z"
+                },
+                "end_date": {
+                    "type": "string",
+                    "example": "2027-09-30T19:05:47.904Z"
+                },
+                "campaign_id": {
+                    "type": "string",
+                    "example": "5c18f2966f569300803f6573"
+                },
+                "target": {
+                    "$ref": "#/definitions/TargetInfo"
+                },
+                "ios_min_version": {
+                    "type": "string",
+                    "example": "10.3"
+                },
+                "android_min_version": {
+                    "type": "string",
+                    "example": "10.3"
+                },
+                "conditions": {
+                    "$ref": "#/definitions/BannerConditions"
+                },
+                "info": {
+                    "$ref": "#/definitions/BannerInfo"
+                }
+            },
+            "type": "object"
+        },
+        "BlackListedConsumerCreateRequest": {
+            "properties": {
+                "transaction_types": {
+                    "description": "CashbackRequest class",
+                    "type": "array",
+                    "items": {
+                        "type": "string",
+                        "example": "p2p"
+                    }
+                },
+                "campaign_types": {
+                    "description": "CashbackRequest class",
+                    "type": "array",
+                    "items": {
+                        "type": "string",
+                        "example": "cashback"
+                    }
+                },
+                "details": {
+                    "description": "CashbackRequest class",
+                    "$ref": "#/definitions/BlackListedConsumerCreateDetailRequest"
+                }
+            },
+            "type": "object"
+        },
+        "BlackListedConsumerCreateDetailRequest": {
+            "properties": {
+                "created_by": {
+                    "description": "CashbackRequest class",
+                    "type": "string",
+                    "example": "user@picpay.com"
+                },
+                "origin": {
+                    "description": "CashbackRequest class",
+                    "type": "string",
+                    "example": "herodash"
+                },
+                "description": {
+                    "description": "CashbackRequest class",
+                    "type": "string",
+                    "example": "Cadastro xpto"
+                }
+            },
+            "type": "object"
+        },
+        "BlackListedConsumerRequest": {
+            "properties": {
+                "transaction_types": {
+                    "description": "BlackListedConsumerRequest class",
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    },
+                    "example": "['p2p','pav']"
+                },
+                "campaign_types": {
+                    "description": "BlackListedConsumerRequest class",
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    },
+                    "example": "['cashback','cashfront]"
+                },
+                "details": {
+                    "description": "BlackListedConsumerRequest class",
+                    "$ref": "#/definitions/BlackListedConsumerDetailRequest"
+                }
+            },
+            "type": "object"
+        },
+        "BlackListedConsumerDetailRequest": {
+            "properties": {
+                "created_by": {
+                    "description": "BlackListedConsumerRequest class",
+                    "type": "string",
+                    "example": "user@picpay.com"
+                },
+                "origin": {
+                    "description": "BlackListedConsumerRequest class",
+                    "type": "string",
+                    "example": "herodash"
+                },
+                "description": {
+                    "description": "BlackListedConsumerRequest class",
+                    "type": "string",
+                    "example": "Cadastro xpto"
+                }
+            },
+            "type": "object"
+        },
+        "BlackListedConsumerUpdateRequest": {
+            "properties": {
+                "transaction_types": {
+                    "description": "BlackListedConsumerUpdateRequest class",
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    },
+                    "example": "['p2p','pav']"
+                },
+                "campaign_types": {
+                    "description": "BlackListedConsumerUpdateRequest class",
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    },
+                    "example": "['cashback','cashfront]"
+                },
+                "details": {
+                    "description": "BlackListedConsumerUpdateRequest class",
+                    "$ref": "#/definitions/BlackListedConsumerDetailUpdateRequest"
+                }
+            },
+            "type": "object"
+        },
+        "BlackListedConsumerDetailUpdateRequest": {
+            "properties": {
+                "created_by": {
+                    "description": "BlackListedConsumerUpdateRequest class",
+                    "type": "string",
+                    "example": "user@picpay.com"
+                },
+                "origin": {
+                    "description": "BlackListedConsumerUpdateRequest class",
+                    "type": "string",
+                    "example": "herodash"
+                },
+                "description": {
+                    "description": "BlackListedConsumerUpdateRequest class",
+                    "type": "string",
+                    "example": "Cadastro xpto"
+                }
+            },
+            "type": "object"
+        },
+        "Campaign": {
+            "properties": {
+                "name": {
+                    "description": "class CampaignRequest",
+                    "type": "string",
+                    "example": "Campanha"
+                },
+                "description": {
+                    "description": "class CampaignRequest",
+                    "type": "string",
+                    "example": "Uma campanha muito legal."
+                },
+                "type": {
+                    "description": "class CampaignRequest",
+                    "type": "string",
+                    "enum": [
+                        "cashback",
+                        "instantcash",
+                        "cashfront"
+                    ]
+                },
+                "global": {
+                    "description": "class CampaignRequest",
+                    "type": "boolean",
+                    "example": true
+                },
+                "consumers": {
+                    "description": "class CampaignRequest",
+                    "type": "array",
+                    "items": {
+                        "type": "integer",
+                        "example": 4
+                    }
+                },
+                "sellers": {
+                    "description": "class CampaignRequest",
+                    "type": "array",
+                    "items": {
+                        "type": "integer",
+                        "example": 3
+                    }
+                },
+                "except_sellers": {
+                    "description": "class CampaignRequest",
+                    "type": "array",
+                    "items": {
+                        "type": "integer",
+                        "example": 8
+                    }
+                },
+                "sellers_types": {
+                    "description": "class CampaignRequest",
+                    "type": "array",
+                    "items": {
+                        "type": "string",
+                        "example": "membership"
+                    }
+                },
+                "webhook_url": {
+                    "description": "class CampaignRequest",
+                    "type": "string",
+                    "example": "http://webhookpromo.aws.picpay.endereco-grande.com"
+                },
+                "webview_url": {
+                    "description": "class CampaignRequest",
+                    "type": "string",
+                    "example": "http://cdn.aws.picpay.endereco-grande.com/termos.html"
+                },
+                "duration": {
+                    "description": "class CampaignRequest",
+                    "$ref": "#/definitions/DurationDetails"
+                },
+                "cashback": {
+                    "description": "class CampaignRequest",
+                    "$ref": "#/definitions/CashbackDetails"
+                },
+                "cashfront": {
+                    "description": "class CampaignRequest",
+                    "$ref": "#/definitions/CashfrontDetails"
+                },
+                "instantcash": {
+                    "description": "class CampaignRequest",
+                    "$ref": "#/definitions/InstantcashDetails"
+                },
+                "transaction": {
+                    "description": "class CampaignRequest",
+                    "$ref": "#/definitions/TransactionDetails"
+                },
+                "deposit": {
+                    "description": "class CampaignRequest",
+                    "$ref": "#/definitions/DepositDetails"
+                },
+                "tags": {
+                    "description": "class CampaignRequest",
+                    "type": "array",
+                    "items": {
+                        "type": "string",
+                        "example": "5cb09ff75d8a99961e1a36c4"
+                    }
+                },
+                "limits": {
+                    "description": "class CampaignRequest",
+                    "$ref": "#/definitions/CampaignLimits"
+                },
+                "external_merchant": {
+                    "description": "class CampaignRequest",
+                    "$ref": "#/definitions/ExternalMerchant"
+                }
+            },
+            "type": "object"
+        },
+        "DurationDetails": {
+            "properties": {
+                "fixed": {
+                    "description": "Se a campanha tem datas fixas ou prazo din\u00e2mico",
+                    "type": "boolean",
+                    "example": true
+                },
+                "start_date": {
+                    "description": "class CampaignRequest",
+                    "type": "string",
+                    "example": "2018-09-28T19:05:47.904Z"
+                },
+                "end_date": {
+                    "description": "class CampaignRequest",
+                    "type": "string",
+                    "example": "2027-09-30T19:05:47.904Z"
+                },
+                "hours": {
+                    "description": "Dura\u00e7\u00e3o da campanha em horas, ap\u00f3s o recebimento da notifica\u00e7\u00e3o (campanha n\u00e3o fixa)",
+                    "type": "integer",
+                    "example": 1
+                },
+                "days": {
+                    "description": "Dura\u00e7\u00e3o da campanha em dias, ap\u00f3s o recebimento da notifica\u00e7\u00e3o (campanha n\u00e3o fixa)",
+                    "type": "integer",
+                    "example": 3
+                },
+                "weeks": {
+                    "description": "Dura\u00e7\u00e3o da campanha em semanas , ap\u00f3s o recebimento da notifica\u00e7\u00e3o (campanha n\u00e3o fixa)",
+                    "type": "integer",
+                    "example": 2
+                },
+                "months": {
+                    "description": "Dura\u00e7\u00e3o da campanha em months , ap\u00f3s o recebimento da notifica\u00e7\u00e3o (campanha n\u00e3o fixa)",
+                    "type": "integer",
+                    "example": 6
+                }
+            },
+            "type": "object"
+        },
+        "CashbackDetails": {
+            "properties": {
+                "percentage": {
+                    "description": "class CampaignRequest",
+                    "type": "float",
+                    "example": 2.2
+                },
+                "max_value": {
+                    "description": "class CampaignRequest",
+                    "type": "float",
+                    "example": 5.5
+                },
+                "paid_by": {
+                    "description": "class CampaignRequest",
+                    "type": "string",
+                    "enum": [
+                        "picpay",
+                        "seller"
+                    ]
+                }
+            },
+            "type": "object"
+        },
+        "CashfrontDetails": {
+            "properties": {
+                "percentage": {
+                    "description": "class CampaignRequest",
+                    "type": "float",
+                    "example": 2.2
+                },
+                "max_value": {
+                    "description": "class CampaignRequest",
+                    "type": "float",
+                    "example": 5.5
+                }
+            },
+            "type": "object"
+        },
+        "InstantcashDetails": {
+            "properties": {
+                "value": {
+                    "description": "class CampaignRequest",
+                    "type": "float",
+                    "example": 10
+                }
+            },
+            "type": "object"
+        },
+        "TransactionDetails": {
+            "properties": {
+                "type": {
+                    "description": "class CampaignRequest",
+                    "type": "string",
+                    "enum": [
+                        "p2p",
+                        "pav",
+                        "mixed"
+                    ]
+                },
+                "min_transaction_value": {
+                    "description": "class CampaignRequest",
+                    "type": "float",
+                    "example": 10
+                },
+                "max_transactions": {
+                    "description": "class CampaignRequest",
+                    "type": "integer",
+                    "example": 40000
+                },
+                "max_transactions_per_consumer": {
+                    "description": "class CampaignRequest",
+                    "type": "integer",
+                    "example": 3
+                },
+                "max_transactions_per_consumer_per_day": {
+                    "description": "class CampaignRequest",
+                    "type": "integer",
+                    "example": 1
+                },
+                "required_message": {
+                    "description": "class CampaignRequest",
+                    "type": "string",
+                    "example": "#VaiBrasil"
+                },
+                "first_payment_to_seller": {
+                    "description": "class CampaignRequest",
+                    "type": "boolean",
+                    "example": false
+                },
+                "first_payee_received_payment_only": {
+                    "description": "class CampaignRequest",
+                    "type": "boolean",
+                    "example": false
+                },
+                "credit_card_brands": {
+                    "description": "class CampaignRequest",
+                    "type": "array",
+                    "items": {
+                        "type": "string",
+                        "example": "picpay"
+                    }
+                },
+                "payment_methods": {
+                    "description": "class CampaignRequest",
+                    "type": "array",
+                    "items": {
+                        "type": "string",
+                        "example": "credit-card"
+                    }
+                }
+            },
+            "type": "object"
+        },
+        "DepositDetails": {
+            "properties": {
+                "min_deposit_value": {
+                    "description": "class CampaignRequest",
+                    "type": "float",
+                    "example": 10
+                },
+                "max_deposits": {
+                    "description": "class CampaignRequest",
+                    "type": "integer",
+                    "example": 40000
+                },
+                "max_deposits_per_consumer": {
+                    "description": "class CampaignRequest",
+                    "type": "integer",
+                    "example": 3
+                },
+                "max_deposits_per_consumer_per_day": {
+                    "description": "class CampaignRequest",
+                    "type": "integer",
+                    "example": 1
+                },
+                "first_deposit_only": {
+                    "description": "class CampaignRequest",
+                    "type": "boolean",
+                    "example": true
+                }
+            },
+            "type": "object"
+        },
+        "CampaignLimits": {
+            "properties": {
+                "uses_per_consumer": {
+                    "description": "class CampaignRequest",
+                    "$ref": "#/definitions/UsesPerConsumer"
+                },
+                "uses_per_consumer_per_period": {
+                    "description": "class CampaignRequest",
+                    "$ref": "#/definitions/UsesPerConsumerPerPeriod"
+                }
+            },
+            "type": "object"
+        },
+        "UsesPerConsumer": {
+            "properties": {
+                "type": {
+                    "description": "class CampaignRequest",
+                    "type": "string",
+                    "enum": [
+                        "count",
+                        "sum"
+                    ]
+                },
+                "uses": {
+                    "description": "class CampaignRequest",
+                    "type": "float",
+                    "example": 1
+                }
+            },
+            "type": "object"
+        },
+        "UsesPerConsumerPerPeriod": {
+            "properties": {
+                "type": {
+                    "description": "class CampaignRequest",
+                    "type": "string",
+                    "enum": [
+                        "count",
+                        "sum"
+                    ]
+                },
+                "period": {
+                    "description": "class CampaignRequest",
+                    "type": "string",
+                    "enum": [
+                        "day",
+                        "week",
+                        "month"
+                    ]
+                },
+                "uses": {
+                    "description": "class CampaignRequest",
+                    "type": "float",
+                    "example": 1
+                }
+            },
+            "type": "object"
+        },
+        "ExternalMerchant": {
+            "properties": {
+                "type": {
+                    "description": "class CampaignRequest",
+                    "type": "string",
+                    "example": "cielo"
+                },
+                "ids": {
+                    "description": "class CampaignRequest",
+                    "type": "array",
+                    "items": {
+                        "type": "string",
+                        "example": "0020045759939200"
+                    }
+                }
+            },
+            "type": "object"
+        },
+        "TransactionCorePayload": {
+            "properties": {
+                "transaction": {
+                    "description": "CashbackRequest class",
+                    "$ref": "#/definitions/TransactionCorePayloadDetails"
+                }
+            }
+        },
+        "TransactionCorePayloadDetails": {
+            "properties": {
+                "type": {
+                    "description": "CashbackRequest class",
+                    "type": "string",
+                    "example": "p2p"
+                },
+                "id": {
+                    "description": "CashbackRequest class",
+                    "type": "integer",
+                    "example": "34346"
+                },
+                "message": {
+                    "description": "CashbackRequest class",
+                    "type": "string",
+                    "example": "#VaiBrasil"
+                },
+                "credit_card": {
+                    "description": "CashbackRequest class",
+                    "type": "number",
+                    "example": 30.5
+                },
+                "wallet": {
+                    "description": "CashbackRequest class",
+                    "type": "number",
+                    "example": 10.12
+                },
+                "total": {
+                    "description": "CashbackRequest class",
+                    "type": "number",
+                    "example": 40.62
+                },
+                "seller_id": {
+                    "description": "CashbackRequest class",
+                    "type": "integer",
+                    "example": 356
+                },
+                "seller_type": {
+                    "description": "CashbackRequest class",
+                    "type": "string",
+                    "example": "membership"
+                },
+                "credit_card_brand": {
+                    "description": "CashbackRequest class",
+                    "type": "string",
+                    "example": "picpay"
+                },
+                "bill_id": {
+                    "description": "CashbackRequest class",
+                    "type": "integer",
+                    "example": 7465745
+                },
+                "first_payment_to_seller": {
+                    "description": "CashbackRequest class",
+                    "type": "boolean",
+                    "example": true
+                },
+                "first_payee_received_payment": {
+                    "description": "CashbackRequest class",
+                    "type": "boolean",
+                    "example": true
+                },
+                "external_merchant": {
+                    "description": "CashbackRequest class",
+                    "$ref": "#/definitions/ExternalMerchantCorePayload"
+                }
+            },
+            "type": "object"
+        },
+        "ExternalMerchantCorePayload": {
+            "properties": {
+                "type": {
+                    "description": "CashbackRequest class",
+                    "type": "string",
+                    "example": "cielo"
+                },
+                "id": {
+                    "description": "CashbackRequest class",
+                    "type": "string",
+                    "example": "3436567946"
+                }
+            },
+            "type": "object"
+        },
+        "DepositCorePayload": {
+            "properties": {
+                "deposit": {
+                    "description": "CashfrontRequest class",
+                    "$ref": "#/definitions/DepositCorePayloadDetails"
+                }
+            }
+        },
+        "DepositCorePayloadDetails": {
+            "properties": {
+                "id": {
+                    "description": "CashfrontRequest class",
+                    "type": "integer",
+                    "example": "34346"
+                },
+                "recharge_method": {
+                    "description": "CashfrontRequest class",
+                    "type": "string",
+                    "example": "conta-corrente"
+                },
+                "total": {
+                    "description": "CashfrontRequest class",
+                    "type": "number",
+                    "example": 40.62
+                },
+                "first_deposit": {
+                    "description": "CashfrontRequest class",
+                    "type": "boolean",
+                    "example": true
+                }
+            },
+            "type": "object"
+        },
+        "ConsumerBatchPaymentCampaign": {
+            "properties": {
+                "campaign_id": {
+                    "description": "ConsumerBatchPayment class"
+                }
+            },
+            "type": "string"
+        },
+        "ConsumerBatchPaymentJustification": {
+            "properties": {
+                "justification": {
+                    "description": "ConsumerBatchPayment class"
+                }
+            },
+            "type": "string"
+        },
+        "ConsumerBatchPaymentFile": {
+            "properties": {
+                "file": {
+                    "description": "ConsumerBatchPayment class"
+                }
+            },
+            "type": "file"
+        },
+        "CouponApplicationPayload": {
+            "properties": {
+                "coupon": {
+                    "description": "CouponRequest class",
+                    "$ref": "#/definitions/CouponApplicationPayloadDetails"
+                }
+            }
+        },
+        "CouponApplicationPayloadDetails": {
+            "properties": {
+                "code": {
+                    "description": "CouponRequest class",
+                    "type": "string",
+                    "example": "UBER20"
+                },
+                "conditions": {
+                    "description": "CouponRequest class",
+                    "$ref": "#/definitions/CouponApplicationPayloadConditions"
+                }
+            }
+        },
+        "CouponApplicationPayloadConditions": {
+            "properties": {
+                "first_transaction": {
+                    "description": "CouponRequest class",
+                    "type": "boolean",
+                    "example": true
+                },
+                "area_code": {
+                    "description": "CouponRequest class",
+                    "type": "integer",
+                    "example": 27
+                }
+            }
+        },
+        "Coupon": {
+            "properties": {
+                "redirection_type": {
+                    "description": "CouponRequest class",
+                    "type": "string",
+                    "enum": [
+                        "webview",
+                        "app_screen"
+                    ]
+                },
+                "code": {
+                    "description": "CouponRequest class",
+                    "type": "string",
+                    "example": "UBER20"
+                },
+                "campaign_id": {
+                    "description": "CouponRequest class",
+                    "type": "string",
+                    "example": "5be41adc02655b0018142c7f"
+                },
+                "global": {
+                    "description": "CouponRequest class",
+                    "type": "boolean",
+                    "example": false
+                },
+                "max_associations": {
+                    "description": "CouponRequest class",
+                    "type": "integer",
+                    "example": 300
+                },
+                "webview_url": {
+                    "description": "CouponRequest class",
+                    "type": "string",
+                    "example": "http://cdn.aws.picpay.endereco-grande.com/termos.html"
+                },
+                "app_screen_path": {
+                    "description": "CouponRequest class",
+                    "type": "string",
+                    "example": "termos"
+                },
+                "conditions": {
+                    "description": "CouponRequest class",
+                    "$ref": "#/definitions/ConditionsObject"
+                }
+            },
+            "type": "object"
+        },
+        "ConditionsObject": {
+            "properties": {
+                "first_transaction_only": {
+                    "description": "CouponRequest class",
+                    "type": "boolean",
+                    "example": false
+                },
+                "area_codes": {
+                    "description": "CouponRequest class",
+                    "type": "array",
+                    "items": {
+                        "type": "integer",
+                        "example": 27
+                    }
+                }
+            },
+            "type": "object"
+        },
+        "PublishBanners": {
+            "properties": {
+                "ids": {
+                    "type": "array",
+                    "items": {
+                        "type": "string",
+                        "example": "5c1a8fad6f569302a152cf92"
+                    }
+                }
+            },
+            "type": "object"
+        },
+        "TagAssociation": {
+            "properties": {
+                "tags": {
+                    "type": "array",
+                    "items": {
+                        "type": "string",
+                        "example": "5c1a8fad6f569302a152cf92"
+                    }
+                }
+            },
+            "type": "object"
+        },
+        "Tag": {
+            "properties": {
+                "name": {
+                    "description": "TagRequest class",
+                    "type": "string",
+                    "example": "Comercial"
+                },
+                "abbreviation": {
+                    "description": "TagRequest class",
+                    "type": "string",
+                    "example": "COM"
+                },
+                "color": {
+                    "description": "TagRequest class",
+                    "type": "string",
+                    "example": "#FFF"
+                }
+            },
+            "type": "object"
+        },
+        "UpdateCampaignSellers": {
+            "properties": {
+                "sellers": {
+                    "description": "UpdateCampaignSellersRequest class",
+                    "type": "array",
+                    "items": {
+                        "type": "integer",
+                        "example": 3
+                    }
+                }
+            },
+            "type": "object"
+        },
+        "UpdateCampaignStatus": {
+            "properties": {
+                "active": {
+                    "description": "UpdateCampaignStatusRequest class",
+                    "type": "boolean",
+                    "example": true
+                }
+            },
+            "type": "object"
+        },
+        "Webhook": {
+            "properties": {
+                "campaign_id": {
+                    "description": "WebhookRequest class",
+                    "type": "string",
+                    "example": "5d1b7faa983e151c6a42d911"
+                },
+                "coupon_id": {
+                    "description": "WebhookRequest class",
+                    "type": "string",
+                    "example": "1"
+                },
+                "variants": {
+                    "description": "WebhookRequest class",
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/WebhookVariant"
+                    }
+                }
+            },
+            "type": "object"
+        },
+        "WebhookVariant": {
+            "properties": {
+                "name": {
+                    "description": "WebhookRequest class",
+                    "type": "string",
+                    "example": "Nome"
+                },
+                "percentage": {
+                    "description": "WebhookRequest class",
+                    "type": "float",
+                    "example": "2"
+                },
+                "target": {
+                    "description": "WebhookRequest class",
+                    "$ref": "#/definitions/WebhookTargetInfo"
+                },
+                "push": {
+                    "description": "WebhookRequest class",
+                    "$ref": "#/definitions/PushInfo"
+                },
+                "in_app": {
+                    "description": "WebhookRequest class",
+                    "$ref": "#/definitions/InAppInfo"
+                },
+                "sms": {
+                    "description": "WebhookRequest class",
+                    "$ref": "#/definitions/SMSInfo"
+                }
+            },
+            "type": "object"
+        },
+        "WebhookTargetInfo": {
+            "properties": {
+                "model": {
+                    "description": "WebhookRequest class",
+                    "type": "string",
+                    "enum": [
+                        "generic",
+                        "generic_to_screen",
+                        "generic_to_webview"
+                    ],
+                    "example": "generic"
+                },
+                "href": {
+                    "description": "WebhookRequest class",
+                    "type": "string",
+                    "example": ""
+                },
+                "params": {
+                    "description": "WebhookRequest class",
+                    "type": "string",
+                    "example": ""
+                },
+                "user_properties": {
+                    "description": "WebhookRequest class",
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                }
+            },
+            "type": "object"
+        },
+        "PushInfo": {
+            "properties": {
+                "title": {
+                    "description": "WebhookRequest class",
+                    "type": "string",
+                    "example": ""
+                },
+                "message": {
+                    "description": "WebhookRequest class",
+                    "type": "string",
+                    "example": ""
+                }
+            },
+            "type": "object"
+        },
+        "InAppInfo": {
+            "properties": {
+                "message": {
+                    "description": "WebhookRequest class",
+                    "type": "string",
+                    "example": ""
+                }
+            },
+            "type": "object"
+        },
+        "SMSInfo": {
+            "properties": {
+                "message": {
+                    "description": "WebhookRequest class",
+                    "type": "string",
+                    "example": ""
+                }
+            },
+            "type": "object"
+        }
+    }
+}

@@ -2,7 +2,9 @@ version: '3.3'
 services:
   prometheus:
       image: prom/prometheus
-      container_name: prometheus
+      volumes:
+      - ./conf/prometheus/:/etc/prometheus/
+      - prometheus_data:/var/lib/prometheus
       restart: always
       #volumes:
         #- ./data/prometheus/conf:/etc/prometheus/
@@ -22,21 +24,10 @@ services:
       - /proc:/usr/proc
       - /sys:/usr/sys
       - /:/rootfs
-    deploy:
-      mode: global
     networks:
       - frontend
     ports:
       - 9100:9100
-
-  alertmanager:
-    image: prom/alertmanager
-    volumes:
-      - ./data/alertmanager/conf/:/etc/alertmanager/
-    networks:
-      - frontend
-    ports:
-      - 9093:9093
 
   cadvisor:
     image: google/cadvisor
@@ -49,14 +40,14 @@ services:
       - /var/run/docker.sock:/var/run/docker.sock:ro
     networks:
       - frontend
-    deploy:
-      mode: global
     ports:
       - 8080:8080
 
   grafana:
     image: grafana/grafana
     container_name: grafana
+    volumes:
+      - grafana_data:/var/lib/grafana
     ports:
       - "3000:3000"
     env_file:
@@ -70,3 +61,6 @@ networks:
   frontend:
     external: true
 
+volumes:
+    prometheus_data:
+    grafana_data:
